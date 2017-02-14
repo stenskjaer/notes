@@ -44,7 +44,9 @@ and press enter.
 
 All in this guide that need to be executed in the command line look like this:
 
-    > terminal command
+``` shell
+> terminal command
+```
 
 The ">" indicates that the content is a terminal command. Other code examples
 (such as LaTeX code) are also shown in the same frames, but unless it is
@@ -56,7 +58,9 @@ Enter.
 Sometimes you will need to replace some values in the commands. These variable
 values are marked with \`<brackets>\` in the commands, like so:
 
-    > perl -p -i.backup -e 's/(.+)\n/\\pstart\n\1\n\\pend\n/g' "<file name>.tex"
+``` shell
+> perl -p -i.backup -e 's/(.+)\n/\\pstart\n\1\n\\pend\n/g' "<file name>.tex"
+```
 
 
 <a id="orge585f23"></a>
@@ -85,7 +89,9 @@ Use the \`cd\`-command in the command line to navigate to the documente director
 For example, if you want to go to the directory \`editions/old Word cruft/My
 great edition\` in your \`Documents\` directory, write:
 
-    > cd ~/Documents/editions/old\ Word\ cruft/My\ great\ edition/
+``` shell
+> cd ~/Documents/editions/old\ Word\ cruft/My\ great\ edition/
+``` 
 
 A handy tip: To avoid writing the whole path of the directory, you can just
 write \`cd \` in the Terminal and drag and drop the directory you want to go to
@@ -127,22 +133,26 @@ document should then be read by a master tex document containing a preamble.
 
 In the directory of the document, run:
 
-    > pandoc --from=docx --to=latex --wrap=none --output=./output.tex <document-title>.docx
+``` shell
+> pandoc --from=docx --to=latex --wrap=none --output=./output.tex <document-title>.docx
+```
 
 To include this in a master tex file, use the \`\input\`-macro:
 
 Create a master file with this structure in the same directory as the
 \`output.tex\` that *Pandoc* has just created:
 
-    \documentclass{book}
+``` latex
+\documentclass{book}
     
-    % All your preambular material
+% All your preambular material
     
-    \begin{document}
+\begin{document}
     
-    \input{output}
+\input{output}
     
-    \end{document}
+\end{document}
+```
 
 Alternatively, \`\include{}\` can be used in the same way. This adds appropriate
 pagebreaks before the included document and makes the use of \`\includeonly{}\` in
@@ -159,36 +169,40 @@ edition.
 First, include reledmac in the preamble of the master file and add
 \`\beginnumbering\` and \`\endnumbering\` around the included document:
 
-    \documentclass{book}
-    \usepackage{reledmac}
-    % All your other preambular material
+``` latex
+\documentclass{book}
+\usepackage{reledmac}
+% All your other preambular material
     
-    \begin{document}
+\begin{document}
     
-    \beginnumbering
-    \input{output}
-    \endnumbering
+\beginnumbering
+\input{output}
+\endnumbering
     
-    \end{document}
+\end{document}
+```
 
 You will probably also need to set the language (if not English) with *Polyglossia*:
 
-    \documentclass{book}
-    \usepackage{reledmac}
-    \usepackage{polyglossia}
-    \setmainlanguage{english}
-    \setotherlanguage[variant=medieval]{latin}
-    % All your other preambular material
-    
-    \begin{document}
-    
-    \begin{latin}
-    \beginnumbering
-    \input{output}
-    \endnumbering
-    \end{latin}
-    
-    \end{document}
+``` latex
+\documentclass{book}
+\usepackage{reledmac}
+\usepackage{polyglossia}
+\setmainlanguage{english}
+\setotherlanguage[variant=medieval]{latin}
+% All your other preambular material
+
+\begin{document}
+
+\begin{latin}
+\beginnumbering
+\input{output}
+\endnumbering
+\end{latin}
+
+\end{document}
+```
 
 You might also want to move any possible title material (author, title etc.)
 of the edition from the converted tex file (\`output.tex\`) to the master file if
@@ -202,8 +216,9 @@ you don't want those lines numbered.
 For *Reledmac* to create the paragraphs correctly, they should be wrapped in
 \`\pstart\` and \`\pend\`
 
-    perl -p -i.backup -e 's/(.+)\n/\\pstart\n\1\n\\pend\n/g' "output.tex"
-
+``` shell
+> perl -p -i.backup -e 's/(.+)\n/\\pstart\n\1\n\\pend\n/g' "output.tex"
+```
 
 <a id="org96c6f56"></a>
 
@@ -249,7 +264,11 @@ They take the following possibilities into consideration:
 -   In the footnote any level of LaTeX commands will be included (in case the note
     contains \`\emph{}\`, \`\textbf{}\` and what not.
 
-    > perl -p -i.backup -e 's/(\w+)([.,;:?!{}\[\]]+)?\\footnote{(Boeth|Arist.*?)((?:\{(?-1)\}|[^{}]++)*)}/\\edtext{\1}{\\lemma{}\\Bfootnote{\3\4}}\2/gi' "output.tex"
+
+``` shell
+> perl -p -i.backup -e 's/(\w+)([.,;:?!{}\[\]]+)?\\footnote{(Boeth|Arist.*?)((?:\{(?-1)\}|[^{}]++)*)}/\\edtext{\1}{\\lemma{}\\Bfootnote{\3\4}}\2/gi' "output.tex"
+
+```
 
 
 <a id="orgaaba5c6"></a>
@@ -260,7 +279,9 @@ Now, we can try to convert the remaining \`\footnote{}\`s to critical notes,
 regardless of whether there is a lemma marker ("]") or not. The assumption is
 that the lemma of the text is also contained in the footnote.
 
-    > perl -p -i.backup -e 's/(.+)([.,;:?!{}\[\]]+)?\\footnote{\1 ?(?:{\]})? ?((?:\{(?-1)\}|[^{}]++)*)}/\\edtext{\1}{\\Afootnote{\3}}\2/gi' "output.tex"
+``` shell
+> perl -p -i.backup -e 's/(.+)([.,;:?!{}\[\]]+)?\\footnote{\1 ?(?:{\]})? ?((?:\{(?-1)\}|[^{}]++)*)}/\\edtext{\1}{\\Afootnote{\3}}\2/gi' "output.tex"
+```
 
 TODO:
 
@@ -285,36 +306,4 @@ want it to refer to an extended reference or quotation.
 
 
 <a id="org278d0a0"></a>
-
-## Misc. notes
-
-Lav fodnoter med &#x2026; om til formatet med hele passagen i \edtext:
-søg efter (1+ ord), en udefineret mængde, (1+ ord) som gengives i \\1
-&#x2026; \\2. ; med ]
-Det skal have lookback.
-
-    perl -p -e 's/((\w+ \b\w+).*?(\w+))([.,:;?!])?\\footnote{ ?\2 \.\.\. \3\] ((?:\{(?-1)\}|[^{}]++)*)}/ \\edtext{\1}{\\lemma{\2 \\dots{} \3}\\Afootnote{\5}}\4/gi' "testing.tex"
-    
-    perl -p -e 's/((\w+ \b\w+).*?(\w+))([.,:;?!])?
-    
-    (\\footnote{ ?)(\w+) \.\.\. (\w+)\] ((?<=\2\1)(?<=.*?)(?<=\3))
-    
-    ((?:\{(?-1)\}|[^{}]++)*)}/ \\edtext{\1}{\\lemma{\2 \\dots{} \3}\\Afootnote{\5}}\4/gi' "testing.tex"
-
-Der mangler en version uden ].
-
-Tjek for "{plus " og "{minus " som laver fejl, og indsæt {} inden
-plus/minus (utestet!)
-
-    perl -p -i.backup -e 's/{ ?(plus|minus)/{{}\1/g'
-
-Til at konvertere \footnote{ lemma note} til \edtext{lemma}{lemma
-note}
-Tager også højde for tilføjelse af post eller ante før lemma (i \textit{})
-
-    perl -p -i.backup -e 's/\b([\w ]+)([.,;:?!])?\\footnote{ ?(\\textit\{(?:post|ante) \}) ?\1( ?(?:\{(?-1)\}|[^{}]++)*)}/\\edtext{\1}{\\Afootnote{\3\1\4}}\2/gi' "Burley De somno edition til Michael.tex"
-
-Fjern tomme tags
-
-    perl -p -i.backup -e 's/\\[\w]+\{\s+\}/ /ig' filename
 
