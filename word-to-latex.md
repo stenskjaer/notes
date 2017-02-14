@@ -42,7 +42,8 @@ and locate the Utilities directory where you will find the Terminal app. *Or*
 you can click the Spotlight icon in the top right corner and search for Terminal
 and press enter.
 
-All in this guide that need to be executed in the command line look like this:
+Everything in this guide that need to be executed in the command line look like
+this:
 
 ``` shell
 > terminal command
@@ -50,13 +51,11 @@ All in this guide that need to be executed in the command line look like this:
 
 The ">" indicates that the content is a terminal command. Other code examples
 (such as LaTeX code) are also shown in the same frames, but unless it is
-preceeded by the ">", don't put it into the command line.
-
-The content of these boxes must be pasted into the Terminal and followed by
-Enter.
+preceeded by the ">", don't put it into the command line. Note: You should not
+include the ">" itself in the terminal.
 
 Sometimes you will need to replace some values in the commands. These variable
-values are marked with \`<brackets>\` in the commands, like so:
+values are marked with `<brackets>` in the commands, like so:
 
 ``` shell
 > perl -p -i.backup -e 's/(.+)\n/\\pstart\n\1\n\\pend\n/g' "<file name>.tex"
@@ -67,11 +66,11 @@ values are marked with \`<brackets>\` in the commands, like so:
 
 # Original document must be .docx format
 
-If your file is in \`.doc\`-format, you can convert it by something like the
+If your file is in `.doc`-format, you can convert it by something like the
 following:
 
 -   Open the file
--   Choose \`File > Save as &#x2026;\`
+-   Choose `File > Save as &#x2026;`
 -   In “Format” choose “Word document (.docx)”
 -   Save the file
 
@@ -82,19 +81,19 @@ This creates a new file in the same location as the old one.
 
 # Navigate to the directory of the document
 
-Use the \`cd\`-command in the command line to navigate to the documente directory
-(you might want to look up the use of \`cd\` and other basic commands in a
+Use the `cd`-command in the command line to navigate to the documente directory
+(you might want to look up the use of `cd` and other basic commands in a
 [handy guide](https://www.davidbaumgold.com/tutorials/command-line/)).
 
-For example, if you want to go to the directory \`editions/old Word cruft/My
-great edition\` in your \`Documents\` directory, write:
+For example, if you want to go to the directory `editions/old Word cruft/My
+great edition` in your `Documents` directory, write:
 
 ``` shell
 > cd ~/Documents/editions/old\ Word\ cruft/My\ great\ edition/
 ``` 
 
 A handy tip: To avoid writing the whole path of the directory, you can just
-write \`cd \` in the Terminal and drag and drop the directory you want to go to
+write `cd ` in the Terminal and drag and drop the directory you want to go to
 from the Finder onto the Terminal window, and it will write out the directory
 for you.
 
@@ -112,7 +111,7 @@ library of document conversion [Pandoc](http://pandoc.org).
 ## Installing Pandoc
 
 If you have never used Pandoc before, you will need to install it (to test if
-you have it installed, try running \`pandoc\` in the command line, if it returns
+you have it installed, try running `pandoc` in the command line, if it returns
 something like “Command not found: pandoc”, you need to install it).
 
 On Mac OS X you can
@@ -120,7 +119,7 @@ On Mac OS X you can
 -   either install it with a typical installation package from
     [the download page](https://github.com/jgm/pandoc/releases).
 -   or install it with the very practical package manager *Homebrew*. If you have
-    that installed, simply run \`brew install pandoc\` from the command line.
+    that installed, simply run `brew install pandoc` from the command line.
 
 
 <a id="org2e87e5f"></a>
@@ -137,10 +136,10 @@ In the directory of the document, run:
 > pandoc --from=docx --to=latex --wrap=none --output=./output.tex <document-title>.docx
 ```
 
-To include this in a master tex file, use the \`\input\`-macro:
+To include this in a master tex file, use the `\input`-macro:
 
 Create a master file with this structure in the same directory as the
-\`output.tex\` that *Pandoc* has just created:
+`output.tex` that *Pandoc* has just created:
 
 ``` latex
 \documentclass{book}
@@ -154,8 +153,8 @@ Create a master file with this structure in the same directory as the
 \end{document}
 ```
 
-Alternatively, \`\include{}\` can be used in the same way. This adds appropriate
-pagebreaks before the included document and makes the use of \`\includeonly{}\` in
+Alternatively, `\include{}` can be used in the same way. This adds appropriate
+pagebreaks before the included document and makes the use of `\includeonly{}` in
 the preamble possible.
 
 If you run the master file in LaTeX, it should output a document with your
@@ -167,7 +166,7 @@ edition.
 # Setup the document for the critical text
 
 First, include reledmac in the preamble of the master file and add
-\`\beginnumbering\` and \`\endnumbering\` around the included document:
+`\beginnumbering` and `\endnumbering` around the included document:
 
 ``` latex
 \documentclass{book}
@@ -205,7 +204,7 @@ You will probably also need to set the language (if not English) with *Polygloss
 ```
 
 You might also want to move any possible title material (author, title etc.)
-of the edition from the converted tex file (\`output.tex\`) to the master file if
+of the edition from the converted tex file (`output.tex`) to the master file if
 you don't want those lines numbered.
 
 
@@ -214,7 +213,7 @@ you don't want those lines numbered.
 # Insert \pstart &#x2026; \pend
 
 For *Reledmac* to create the paragraphs correctly, they should be wrapped in
-\`\pstart\` and \`\pend\`
+`\pstart` and `\pend`
 
 ``` shell
 > perl -p -i.backup -e 's/(.+)\n/\\pstart\n\1\n\\pend\n/g' "output.tex"
@@ -262,7 +261,7 @@ They take the following possibilities into consideration:
 -   punctuation and command characters (.,;:?! and {}[]) following the text. This
     is moved after the edtext command.
 -   In the footnote any level of LaTeX commands will be included (in case the note
-    contains \`\emph{}\`, \`\textbf{}\` and what not.
+    contains `\emph{}`, `\textbf{}` and what not.
 
 
 ``` shell
@@ -275,7 +274,7 @@ They take the following possibilities into consideration:
 
 ## The *apparatus criticus*
 
-Now, we can try to convert the remaining \`\footnote{}\`s to critical notes,
+Now, we can try to convert the remaining `\footnote{}`s to critical notes,
 regardless of whether there is a lemma marker ("]") or not. The assumption is
 that the lemma of the text is also contained in the footnote.
 
@@ -286,8 +285,8 @@ that the lemma of the text is also contained in the footnote.
 TODO:
 
 -   Pattern that will be able to handle entries without any lemmata in the text.
--   Pattern that will substitute long lemmata with \`<first word> &hellip; <last
-    word>\` or something similar.
+-   Pattern that will substitute long lemmata with `<first word> &hellip; <last
+    word>` or something similar.
 
 
 <a id="org6081fa3"></a>
