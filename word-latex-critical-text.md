@@ -20,6 +20,22 @@ This is a short guide purporting to give some tips for converting critical
 textual editions writen in Microsoft Word to the more versatile and professional
 (not to mention aesthetically pleasing) system LaTeX.
 
+The approach relies heavily on the use of the command line and [regular
+expressions](https://en.wikipedia.org/wiki/Regular_expression). Especially regular expressions seems at first sight like an archane
+concoction of magical incantations. We will explain some elements of it along
+the way, but not everything, and it might require a bit of study to really
+understand what is going on. Some resources if that gets necessary:
+
+-   <http://regexr.com/>: Test and experiment with regex's interactively.
+-   <http://perldoc.perl.org/perlrequick.html>: A somewhat in depth quick guide to
+    regex's in Perl (which is the flavour we use here).
+-   <http://perldoc.perl.org/perlre.html>: The documentation of regular expressions
+    in Perl. Comprehensive, but good.
+-   <http://www.rexegg.com/>: Fun with Rex.
+-   Finally: The incredible *Mastering Regular Expressions* by Jeffrey E.F. Friedl
+    is the goto place, if you want to go deep. See
+    <http://shop.oreilly.com/product/9780596528126.do>.
+
 # Prelude for the uninitiated<a id="orgheadline1"></a>
 
 This procedure makes use of the so-called *command line* (aka Terminal in Mac OS
@@ -293,22 +309,9 @@ on the perl regular expression capabilities, see [the documentation](http://perl
 
 # Convert footnotes to critical notes<a id="orgheadline13"></a>
 
-*A technical aside:*
-This is the tricky part as the successful conversion of the footnotes is
-contingent upon the following [regular expressions](https://en.wikipedia.org/wiki/Regular_expression) (or regex's). This means you
-might have to fiddle with the regex's to make the match the way your footnotes
-are formatted. This might require a bit of study to get that working. Some
-resources if that gets necessary:
-
--   <http://regexr.com/>: Test and experiment with regex's interactively.
--   <http://perldoc.perl.org/perlrequick.html>: A somewhat in depth quick guide to
-    regex's in Perl.
--   <http://perldoc.perl.org/perlre.html>: The documentation of regular expressions
-    in Perl. Comprehensive, but good.
--   <http://www.rexegg.com/>: Fun with Rex.
--   Finally: The incredible *Mastering Regular Expressions* by Jeffrey E.F. Friedl
-    is the goto place, if you want to go deep. See
-    <http://shop.oreilly.com/product/9780596528126.do>.
+*A technical aside:* This is probably the most tricky part as most of these
+regular expressions need to take a range of different possible sitautions into
+account. The resources mentioned at the top might come in handy here.
 
 ## The *apparatus fontium*<a id="orgheadline10"></a>
 
