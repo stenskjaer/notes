@@ -16,6 +16,10 @@
   - [Folio numbers](#folio-numbers)
 - [Wrapping up](#wrapping-up)
 
+This is a short guide purporting to give some tips for converting critical
+textual editions writen in Microsoft Word to the more versatile and professional
+(not to mention aesthetically pleasing) system LaTeX.
+
 # Prelude for the uninitiated<a id="orgheadline1"></a>
 
 This procedure makes use of the so-called *command line* (aka Terminal in Mac OS
