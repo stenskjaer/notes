@@ -11,7 +11,6 @@
   - [The *apparatus fontium*](#the-*apparatus-fontium*)
   - [The *apparatus criticus*](#the-*apparatus-criticus*)
   - [Post-processing](#post-processing)
-  - [Misc. notes](#misc.-notes)
 - [Additional conversions](#additional-conversions)
   - [Structural numbering schemes](#structural-numbering-schemes)
   - [Folio numbers](#folio-numbers)
@@ -38,9 +37,9 @@ All in this guide that need to be executed in the command line look like this:
 $ terminal command
 ```
 
-The "$" indicates that the content is a terminal command. Other code examples
+The "\(" indicates that the content is a terminal command. Other code examples
 (such as LaTeX code) are also shown in the same frames, but unless it is
-preceeded by the "$", don't put it into the command line.
+preceeded by the "\)", don't put it into the command line.
 
 The content of these boxes must be pasted into the Terminal and followed by
 Enter.
@@ -288,7 +287,7 @@ without any errors.
 This also made it up for a short *Perl regular expressions 101*. For much more
 on the perl regular expression capabilities, see [the documentation](http://perldoc.perl.org/perlre.html).
 
-# Convert footnotes to critical notes<a id="orgheadline14"></a>
+# Convert footnotes to critical notes<a id="orgheadline13"></a>
 
 *A technical aside:*
 This is the tricky part as the successful conversion of the footnotes is
@@ -378,53 +377,13 @@ You might also want to update the lemmata of your *apparatus fontium* entries,
 as it only refers to the line where the footnote was placed, while you might
 want it to refer to an extended reference or quotation.
 
-## Misc. notes<a id="orgheadline13"></a>
-
-Lav fodnoter med &#x2026; om til formatet med hele passagen i \edtext:
-søg efter (1+ ord), en udefineret mængde, (1+ ord) som gengives i \\1
-&#x2026; \\2. ; med ]
-Det skal have lookback.
-
-```bash
-perl -p -e 's/((\w+ \b\w+).*?(\w+))([.,:;?!])?\\footnote{ ?\2 \.\.\. \3\] ((?:\{(?-1)\}|[^{}]++)*)}/ \\edtext{\1}{\\lemma{\2 \\dots{} \3}\\Afootnote{\5}}\4/gi' "testing.tex"
-
-perl -p -e 's/((\w+ \b\w+).*?(\w+))([.,:;?!])?
-
-(\\footnote{ ?)(\w+) \.\.\. (\w+)\] ((?<=\2\1)(?<=.*?)(?<=\3))
-
-((?:\{(?-1)\}|[^{}]++)*)}/ \\edtext{\1}{\\lemma{\2 \\dots{} \3}\\Afootnote{\5}}\4/gi' "testing.tex"
-```
-
-Der mangler en version uden ].
-
-Tjek for "{plus " og "{minus " som laver fejl, og indsæt {} inden
-plus/minus (utestet!)
-
-```bash
-perl -p -i.backup -e 's/{ ?(plus|minus)/{{}\1/g'
-```
-
-Til at konvertere \footnote{ lemma note} til \edtext{lemma}{lemma
-note}
-Tager også højde for tilføjelse af post eller ante før lemma (i \textit{})
-
-```bash
-perl -p -i.backup -e 's/\b([\w ]+)([.,;:?!])?\\footnote{ ?(\\textit\{(?:post|ante) \}) ?\1( ?(?:\{(?-1)\}|[^{}]++)*)}/\\edtext{\1}{\\Afootnote{\3\1\4}}\2/gi' "Burley De somno edition til Michael.tex"
-```
-
-Fjern tomme tags
-
-```bash
-perl -p -i.backup -e 's/\\[\w]+\{\s+\}/ /ig' filename
-```
-
-# Additional conversions<a id="orgheadline17"></a>
+# Additional conversions<a id="orgheadline16"></a>
 
 Some additional transformations might be in place. You might want to distinguish
 other structural units. This naturally requires some custom regular expressions,
 but some examples can be given here.
 
-## Structural numbering schemes<a id="orgheadline15"></a>
+## Structural numbering schemes<a id="orgheadline14"></a>
 
 Let's say we also add some helpful structural numbers in the format “<1.>” or
 “<1.3.2>” representing different structural levels of a text.
@@ -437,14 +396,14 @@ $ perl -p -i.backup -e 's/\\textless\{\} ?([0-9. ]+) ?\\textgreater\{\}/\\no{\1\
 
 The matched characters will be all numbers between 0 and 9, "." and " ".
 
-Now we just need a custom macro to format these structural additions. The this
+Now we just need a custom macro to format these structural additions. Add this
 to your preamble
 
 ```latex
 \newcommand{\no}[1]{\textless{}#1\textgreater{}\quad}
 ```
 
-## Folio numbers<a id="orgheadline16"></a>
+## Folio numbers<a id="orgheadline15"></a>
 
 Let's say we mark changes in a witness folio with the following formatting: “|
 42rb |”. How do we make those marks into marginal notes?
@@ -495,7 +454,7 @@ column, we can make the consistently superscript, if we want:
 perl -p -i.backup -e 's/\\textbar\{\}(?:\textbf\{)?~\}?([0-9]+)(?:\\textsuperscript\{)?([abrv]+)\}?(?:\\textbf\{)?~\}?\\textbar\{\}/\\textbar\{\}\\ledsidenote{\1\\textsuperscript\{\2\}} /g' output.tex
 ```
 
-# Wrapping up<a id="orgheadline18"></a>
+# Wrapping up<a id="orgheadline17"></a>
 
 This conversions might not be sufficient for your needs, and it is not unlikely
 that there is still a lot of work to be done with the apparatus. But at least
