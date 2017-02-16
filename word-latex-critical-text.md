@@ -260,11 +260,11 @@ If we want the substitution to create a `\section*{}`, we can do like this:
 Now we assemble it in the substitution command in perl. The syntax is the
 following: `s/<match pattern>/<substitution pattern/g`. The initial "s" tells
 the program that we want it to Subsitute the first pattern by the second. The
-final *modifier* "g" signify that the match is Global (substitution more
+final *modifier* "g" signifies that the match is Global (substitution more
 than one instance in a line).
 
 The complete command thus looks like this:
-='s/\\\textless\\{\\}~(.+?)~\\\textgreater\\{\\}/\\\section\\\*\\{\\1\\}/g'=
+`s/\\textless\{\}~(.+?)~\\textgreater\{\}/\\section\*\{\1\}/g`
 
 To run this substitution from the command line, add `perl -p -i.backup -e`
 before the pattern and the filename after the pattern. The pattern itself should
