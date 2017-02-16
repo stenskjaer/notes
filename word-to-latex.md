@@ -1,33 +1,23 @@
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#org2c6b5a8">1. Prelude for the uninitiated</a></li>
-<li><a href="#orge585f23">2. Original document must be .docx format</a></li>
-<li><a href="#orgb1093b8">3. Navigate to the directory of the document</a></li>
-<li><a href="#org03f13ba">4. Convert the Word document with Pandoc</a>
-<ul>
-<li><a href="#org0e3a5a8">4.1. Installing Pandoc</a></li>
-<li><a href="#org2e87e5f">4.2. Running Pandoc and create a tex master file</a></li>
-</ul>
-</li>
-<li><a href="#org3c00385">5. Setup the document for the critical text</a></li>
-<li><a href="#org0634a70">6. Insert \pstart &#x2026; \pend</a></li>
-<li><a href="#org96c6f56">7. Convert footnotes to critical notes</a>
-<ul>
-<li><a href="#orge9bc6b6">7.1. The <i>apparatus fontium</i></a></li>
-<li><a href="#orgaaba5c6">7.2. The <i>apparatus criticus</i></a></li>
-<li><a href="#org6081fa3">7.3. Post-processing</a></li>
-<li><a href="#org278d0a0">7.4. Misc. notes</a></li>
-</ul>
-</li>
-</ul>
-</div>
-</div>
+- [Prelude for the uninitiated](#prelude-for-the-uninitiated)
+- [Original document must be .docx format](#original-document-must-be-.docx-format)
+- [Navigate to the directory of the document](#navigate-to-the-directory-of-the-document)
+- [Convert the Word document with Pandoc](#convert-the-word-document-with-pandoc)
+  - [Installing Pandoc](#installing-pandoc)
+  - [Running Pandoc and create a tex master file](#running-pandoc-and-create-a-tex-master-file)
+- [Setup the document for the critical text](#setup-the-document-for-the-critical-text)
+- [Insert \pstart &#x2026; \pend and convert headings](#insert-\pstart-&#x2026;-\pend-and-convert-headings)
+  - [Different headings](#different-headings)
+- [Convert footnotes to critical notes](#convert-footnotes-to-critical-notes)
+  - [The *apparatus fontium*](#the-*apparatus-fontium*)
+  - [The *apparatus criticus*](#the-*apparatus-criticus*)
+  - [Post-processing](#post-processing)
+  - [Misc. notes](#misc.-notes)
+- [Additional conversions](#additional-conversions)
+  - [Structural numbering schemes](#structural-numbering-schemes)
+  - [Folio numbers](#folio-numbers)
+- [Wrapping up](#wrapping-up)
 
-<a id="org2c6b5a8"></a>
-
-# Prelude for the uninitiated
+# Prelude for the uninitiated<a id="orgheadline1"></a>
 
 This procedure makes use of the so-called *command line* (aka Terminal in Mac OS
 X) for running different conversion functions. If you have newer before used the
@@ -42,44 +32,39 @@ and locate the Utilities directory where you will find the Terminal app. *Or*
 you can click the Spotlight icon in the top right corner and search for Terminal
 and press enter.
 
-Everything in this guide that need to be executed in the command line look like
-this:
+All in this guide that need to be executed in the command line look like this:
 
-``` shell
-> terminal command
+```shell
+$ terminal command
 ```
 
-The ">" indicates that the content is a terminal command. Other code examples
+The "$" indicates that the content is a terminal command. Other code examples
 (such as LaTeX code) are also shown in the same frames, but unless it is
-preceeded by the ">", don't put it into the command line. Note: You should not
-include the ">" itself in the terminal.
+preceeded by the "$", don't put it into the command line.
+
+The content of these boxes must be pasted into the Terminal and followed by
+Enter.
 
 Sometimes you will need to replace some values in the commands. These variable
 values are marked with `<brackets>` in the commands, like so:
 
-``` shell
-> perl -p -i.backup -e 's/(.+)\n/\\pstart\n\1\n\\pend\n/g' "<file name>.tex"
+```shell
+$ perl -p -i.backup -e 's/(.+)\n/\\pstart\n\1\n\\pend\n/g' "<file name>.tex"
 ```
 
-
-<a id="orge585f23"></a>
-
-# Original document must be .docx format
+# Original document must be .docx format<a id="orgheadline2"></a>
 
 If your file is in `.doc`-format, you can convert it by something like the
 following:
 
 -   Open the file
--   Choose `File > Save as &#x2026;`
+-   Choose `File > Save as ...`
 -   In “Format” choose “Word document (.docx)”
 -   Save the file
 
 This creates a new file in the same location as the old one.
 
-
-<a id="orgb1093b8"></a>
-
-# Navigate to the directory of the document
+# Navigate to the directory of the document<a id="orgheadline3"></a>
 
 Use the `cd`-command in the command line to navigate to the documente directory
 (you might want to look up the use of `cd` and other basic commands in a
@@ -88,27 +73,21 @@ Use the `cd`-command in the command line to navigate to the documente directory
 For example, if you want to go to the directory `editions/old Word cruft/My
 great edition` in your `Documents` directory, write:
 
-``` shell
-> cd ~/Documents/editions/old\ Word\ cruft/My\ great\ edition/
-``` 
+```shell
+$ cd ~/Documents/editions/old\ Word\ cruft/My\ great\ edition/
+```
 
 A handy tip: To avoid writing the whole path of the directory, you can just
-write `cd ` in the Terminal and drag and drop the directory you want to go to
+write ~cd ~ in the Terminal and drag and drop the directory you want to go to
 from the Finder onto the Terminal window, and it will write out the directory
 for you.
 
-
-<a id="org03f13ba"></a>
-
-# Convert the Word document with Pandoc
+# Convert the Word document with Pandoc<a id="orgheadline6"></a>
 
 The utility we will use for converting the Word file to LaTeX is the incredible
 library of document conversion [Pandoc](http://pandoc.org).
 
-
-<a id="org0e3a5a8"></a>
-
-## Installing Pandoc
+## Installing Pandoc<a id="orgheadline4"></a>
 
 If you have never used Pandoc before, you will need to install it (to test if
 you have it installed, try running `pandoc` in the command line, if it returns
@@ -121,10 +100,7 @@ On Mac OS X you can
 -   or install it with the very practical package manager *Homebrew*. If you have
     that installed, simply run `brew install pandoc` from the command line.
 
-
-<a id="org2e87e5f"></a>
-
-## Running Pandoc and create a tex master file
+## Running Pandoc and create a tex master file<a id="orgheadline5"></a>
 
 With this conversion we don't want to create a standalone document, as that will
 make all the subsequent transformations more difficult. In stead the created
@@ -132,8 +108,8 @@ document should then be read by a master tex document containing a preamble.
 
 In the directory of the document, run:
 
-``` shell
-> pandoc --from=docx --to=latex --wrap=none --output=./output.tex <document-title>.docx
+```shell
+$ pandoc --from=docx --to=latex --wrap=none --output=./output.tex <document-title>.docx
 ```
 
 To include this in a master tex file, use the `\input`-macro:
@@ -141,15 +117,15 @@ To include this in a master tex file, use the `\input`-macro:
 Create a master file with this structure in the same directory as the
 `output.tex` that *Pandoc* has just created:
 
-``` latex
+```latex
 \documentclass{book}
-    
+
 % All your preambular material
-    
+
 \begin{document}
-    
+
 \input{output}
-    
+
 \end{document}
 ```
 
@@ -160,31 +136,25 @@ the preamble possible.
 If you run the master file in LaTeX, it should output a document with your
 edition.
 
+# Setup the document for the critical text<a id="orgheadline7"></a>
 
-<a id="org3c00385"></a>
+First, include reledmac in the preamble of the master file:
 
-# Setup the document for the critical text
-
-First, include reledmac in the preamble of the master file and add
-`\beginnumbering` and `\endnumbering` around the included document:
-
-``` latex
+```latex
 \documentclass{book}
 \usepackage{reledmac}
 % All your other preambular material
-    
+
 \begin{document}
-    
-\beginnumbering
+
 \input{output}
-\endnumbering
-    
+
 \end{document}
 ```
 
 You will probably also need to set the language (if not English) with *Polyglossia*:
 
-``` latex
+```latex
 \documentclass{book}
 \usepackage{reledmac}
 \usepackage{polyglossia}
@@ -195,9 +165,7 @@ You will probably also need to set the language (if not English) with *Polygloss
 \begin{document}
 
 \begin{latin}
-\beginnumbering
 \input{output}
-\endnumbering
 \end{latin}
 
 \end{document}
@@ -207,21 +175,120 @@ You might also want to move any possible title material (author, title etc.)
 of the edition from the converted tex file (`output.tex`) to the master file if
 you don't want those lines numbered.
 
+In the converted text (here called `output.tex`) you need to add
+`\beginnumbering` before the first text paragraph and `\endnumbering` after the
+last. It could be done automatically, but it is simpler to do it manually.
 
-<a id="org0634a70"></a>
-
-# Insert \pstart &#x2026; \pend
+# Insert \pstart &#x2026; \pend and convert headings<a id="orgheadline9"></a>
 
 For *Reledmac* to create the paragraphs correctly, they should be wrapped in
-`\pstart` and `\pend`
+`\pstart` and `\pend`. This could usually be done like this:
 
-``` shell
-> perl -p -i.backup -e 's/(.+)\n/\\pstart\n\1\n\\pend\n/g' "output.tex"
+```shell
+$ perl -p -i.backup -e 's/(.+)\n/\\pstart\n\1\n\\pend\n/g' "output.tex"
 ```
 
-<a id="org96c6f56"></a>
+However, if you have an edition where headings are not marked with a separate
+typographical class in the Word, your headings will also be part of the text
+wrapped in `\pstart` and `\pend`. If however they can be identified with a
+unique pattern, we can skip those in this process and change them into headings
+later.
 
-# Convert footnotes to critical notes
+For instance, assume that the two first levels look like this:
+
+-   **Level 1:** “<~LECTIO 1~>” (the ~ is a unbreakable space that Pandoc inserts).
+-   **Level 2:** “< Proeomium >”
+
+We skip those in the processing by replacing the above command with this:
+
+```shell
+$ perl -p -i.backup -e 'm/\\textless\{\}[~ A-Za-z0-9]+\\textgreater\{\}/ ? s/(.+)/\1/ : s/((?<!\\textless\{\}~\w).+)\n/\\pstart\n\1\n\\pend\n/g' "output.tex"
+```
+
+This command is a bit complex, but what it basically says is “for each line, if
+this line starts with the specified heading pattern, skip it, otherwise wrap it
+in `\pstart` and `\pend`.” Now let's convert those headings too.
+
+## Different headings<a id="orgheadline8"></a>
+
+Before we get started, we must get the objective straight. We want to convert
+the different levels of headings to the appropriate LaTeX commands, and since
+headings can't be in a numbered environment, we will also have to wrap the
+sections in `\endnumbering` and `\beginnumbering`.
+
+So, to match the first level, we can use the following regex
+`\\textless\{\}~([A-Z0-9 ]+)~\\textgreater\{\}`.
+
+Some short notes:
+
+-   Some charactes have special functions in regex, so if you want to match those,
+    they much be escaped with the "\\". This explains "\\\\", "\\{", and "\\}".
+-   The text of the heading is matched with the "[A-Z0-9 ]". The "[" and "]" open
+    and close so-called character classes. This means it matches all the
+    characters designated by the brackets. Here it means "all uppercase letters
+    from A to Z", "all numbers between 0 and 9" as well as all spaces (notice the
+    " " in the brackets). The subsequent "+" means "one or more times". So any
+    combination of spaces, uppercase letters and numbers will be matched.
+-   The matched text is surrounded by parentheses. This means that the content of
+    the match can be referred in the substitution pattern. The content of each
+    consecutive parenthesis is numbered according to its location in the string.
+    There is only one here, so it will be printed by writing "\\1" in the
+    substitution pattern.
+
+If we want the substitution to create a `\section*{}`, we can do like this:
+`\\section\*\{\1\}`.
+
+Now we assemble it in the substitution command in perl. The syntax is the
+following: `s/<match pattern>/<substitution pattern/g`. The initial "s" tells
+the program that we want it to Subsitute the first pattern by the second. The
+final *modifier* "g" signify that the match is Global (substitution more
+than one instance in a line).
+
+The complete command thus looks like this:
+='s/\\\textless\\{\\}~(.+?)~\\\textgreater\\{\\}/\\\section\\\*\\{\\1\\}/g'=
+
+To run this substitution from the command line, add `perl -p -i.backup -e`
+before the pattern and the filename after the pattern. The pattern itself should
+be enclosed in quotation marks.
+
+So all told, it looks like this:
+
+```shell
+$ perl -p -i.backup -e 's/^\\textless\{\}~([A-Z0-9 ]+)~\\textgreater\{\}/\n\\endnumbering\n\\section\*\{\1\}\n\\beginnumbering\n/g' output.tex
+```
+
+This will convert something like this:
+
+```latex
+\textless{}~LECTIO I~\textgreater{}
+```
+
+Important note: If you are at the top of the document (before the main text and
+the first `\beginnumbering` that you inserted manually, you should delete the
+`\endnumbering` and `\beginnumbering` that wrap the first headings. They should
+only wrapt the headings *inside* the main text.
+
+**The level two headings**
+
+Applying the same principle to the second level, the match pattern could look
+like this: `\\textless\{\} ([A-Za-z0-9 ]+) \\textgreater\{\}`. To make the whitespace
+facultative, we can add a "?" after it in the pattern: `\\textless\{\} ?(.+?)
+?\\textgreater\{\}`. Notice that we add lowercase letters as a character class.
+
+We will make this a subsection in the document with the following complete
+command:
+
+```shell
+$ perl -p -i.backup -e 's/^\\textless\{\} ?([A-Za-z0-9 ]+) ?\\textgreater\{\}/\\endnumbering\n\\subsection\*\{\1\}\n\\beginnumbering/g' output.tex
+```
+
+Now we have converted the headings, and if you run the document, it should build
+without any errors.
+
+This also made it up for a short *Perl regular expressions 101*. For much more
+on the perl regular expression capabilities, see [the documentation](http://perldoc.perl.org/perlre.html).
+
+# Convert footnotes to critical notes<a id="orgheadline14"></a>
 
 *A technical aside:*
 This is the tricky part as the successful conversion of the footnotes is
@@ -240,10 +307,7 @@ resources if that gets necessary:
     is the goto place, if you want to go deep. See
     <http://shop.oreilly.com/product/9780596528126.do>.
 
-
-<a id="orge9bc6b6"></a>
-
-## The *apparatus fontium*
+## The *apparatus fontium*<a id="orgheadline10"></a>
 
 Now, first we create the *apparatus fontium*, as the *apparatus criticus* might
 catch some of the *fontium* matches as false positives (as that regex is more
@@ -263,35 +327,46 @@ They take the following possibilities into consideration:
 -   In the footnote any level of LaTeX commands will be included (in case the note
     contains `\emph{}`, `\textbf{}` and what not.
 
-
-``` shell
-> perl -p -i.backup -e 's/(\w+)([.,;:?!{}\[\]]+)?\\footnote{(Boeth|Arist.*?)((?:\{(?-1)\}|[^{}]++)*)}/\\edtext{\1}{\\lemma{}\\Bfootnote{\3\4}}\2/gi' "output.tex"
-
+```bash
+$ perl -p -i.backup -e 's/(\w+)([.,;:?!{}\[\]]+)?\\footnote{(Boeth|Arist.*?)((?:\{(?-1)\}|[^{}]++)*)}/\\edtext{\1}{\\lemma{}\\Bfootnote{\3\4}}\2/gi' "output.tex"
 ```
 
+## The *apparatus criticus*<a id="orgheadline11"></a>
 
-<a id="orgaaba5c6"></a>
-
-## The *apparatus criticus*
-
-Now, we can try to convert the remaining `\footnote{}`s to critical notes,
+Now, we can try to convert the remaining ~\footnote{}~s to critical notes,
 regardless of whether there is a lemma marker ("]") or not. The assumption is
 that the lemma of the text is also contained in the footnote.
 
-``` shell
-> perl -p -i.backup -e 's/(.+)([.,;:?!{}\[\]]+)?\\footnote{\1 ?(?:{\]})? ?((?:\{(?-1)\}|[^{}]++)*)}/\\edtext{\1}{\\Afootnote{\3}}\2/gi' "output.tex"
+```bash
+$ perl -p -i.backup -e 's/(.+)([.,;:?!{}\[\]]+)?\\footnote{\1 ?(?:{\]})? ?((?:\{(?-1)\}|[^{}]++)*)}/\\edtext{\1}{\\Afootnote{\3}}\2/gi' "output.tex"
 ```
+
+Note that this conversion does not handle references that are not to a specific
+lemma in the text. For example, if a witness contains an edition that the editor
+chooses not to include in the established text, it cannot be referenced in the
+apparatus. Often that would be solved with a note along the lines of
+“significante *post* impositionis *add. M in marg./”. These empty lemmata are
+handled by /reledmac* by the following encoding:
+`\edtext{}{\lemma{}\Afootnote{significante \emph{post} impositionis \emph{add. M
+in marg.}}`.
+
+To avoid extra space and lemma markers (such as for instance “]”) after empty
+lemmata, the following commands can be used in the preamble:
+
+```latex
+\Xnolemmaseparator[A] % Only applies to the Afootnote-series
+\Xinplaceoflemmaseparator{0pt}
+```
+
+If you have many of these empty lemma notes, and they are formatted in a
+relatively consistent way, you can cook up a regex to handle those situations.
 
 TODO:
 
--   Pattern that will be able to handle entries without any lemmata in the text.
--   Pattern that will substitute long lemmata with `<first word> &hellip; <last
-    word>` or something similar.
+-   Pattern that will substitute long lemmata with `<first word> \dots{} <last
+      word>` or something similar.
 
-
-<a id="org6081fa3"></a>
-
-## Post-processing
+## Post-processing<a id="orgheadline12"></a>
 
 After running these commands, you are not done.
 
@@ -303,6 +378,132 @@ You might also want to update the lemmata of your *apparatus fontium* entries,
 as it only refers to the line where the footnote was placed, while you might
 want it to refer to an extended reference or quotation.
 
+## Misc. notes<a id="orgheadline13"></a>
 
-<a id="org278d0a0"></a>
+Lav fodnoter med &#x2026; om til formatet med hele passagen i \edtext:
+søg efter (1+ ord), en udefineret mængde, (1+ ord) som gengives i \\1
+&#x2026; \\2. ; med ]
+Det skal have lookback.
 
+```bash
+perl -p -e 's/((\w+ \b\w+).*?(\w+))([.,:;?!])?\\footnote{ ?\2 \.\.\. \3\] ((?:\{(?-1)\}|[^{}]++)*)}/ \\edtext{\1}{\\lemma{\2 \\dots{} \3}\\Afootnote{\5}}\4/gi' "testing.tex"
+
+perl -p -e 's/((\w+ \b\w+).*?(\w+))([.,:;?!])?
+
+(\\footnote{ ?)(\w+) \.\.\. (\w+)\] ((?<=\2\1)(?<=.*?)(?<=\3))
+
+((?:\{(?-1)\}|[^{}]++)*)}/ \\edtext{\1}{\\lemma{\2 \\dots{} \3}\\Afootnote{\5}}\4/gi' "testing.tex"
+```
+
+Der mangler en version uden ].
+
+Tjek for "{plus " og "{minus " som laver fejl, og indsæt {} inden
+plus/minus (utestet!)
+
+```bash
+perl -p -i.backup -e 's/{ ?(plus|minus)/{{}\1/g'
+```
+
+Til at konvertere \footnote{ lemma note} til \edtext{lemma}{lemma
+note}
+Tager også højde for tilføjelse af post eller ante før lemma (i \textit{})
+
+```bash
+perl -p -i.backup -e 's/\b([\w ]+)([.,;:?!])?\\footnote{ ?(\\textit\{(?:post|ante) \}) ?\1( ?(?:\{(?-1)\}|[^{}]++)*)}/\\edtext{\1}{\\Afootnote{\3\1\4}}\2/gi' "Burley De somno edition til Michael.tex"
+```
+
+Fjern tomme tags
+
+```bash
+perl -p -i.backup -e 's/\\[\w]+\{\s+\}/ /ig' filename
+```
+
+# Additional conversions<a id="orgheadline17"></a>
+
+Some additional transformations might be in place. You might want to distinguish
+other structural units. This naturally requires some custom regular expressions,
+but some examples can be given here.
+
+## Structural numbering schemes<a id="orgheadline15"></a>
+
+Let's say we also add some helpful structural numbers in the format “<1.>” or
+“<1.3.2>” representing different structural levels of a text.
+
+We could convert this to a custom macro called `\no{}` like this:
+
+```shell
+$ perl -p -i.backup -e 's/\\textless\{\} ?([0-9. ]+) ?\\textgreater\{\}/\\no{\1\}/g' output.tex
+```
+
+The matched characters will be all numbers between 0 and 9, "." and " ".
+
+Now we just need a custom macro to format these structural additions. The this
+to your preamble
+
+```latex
+\newcommand{\no}[1]{\textless{}#1\textgreater{}\quad}
+```
+
+## Folio numbers<a id="orgheadline16"></a>
+
+Let's say we mark changes in a witness folio with the following formatting: “|
+42rb |”. How do we make those marks into marginal notes?
+
+Converted in Pandoc, the folio mark would probably look (something) like this:
+`\textbar{}~42ra~\textbar{}`
+
+We want to convert it into this command `\textbar{}\ledsidenote{42ra}`.
+
+We match the pattern like this: `/\\textbar\{\}~([0-9rvab]+)~\\textbar\{\}/`.
+The brackets with the character classes only contain what is relevant for a
+folio reference, that is all numbers and one or more of the letters "abrv".
+There is no reason for risking overcapturing
+
+But oddly enough, Pandoc sometimes marks the non-breakable space as bold
+(`\textbf{}`), which we also want to match:
+`/\\textbar\{\}(\textbf\{)?~\}?[0-9abrv]+(\textbf\{)?~\}?\\textbar\{\}/`.
+Here the parenthesis around `\\textbf\{` makes it into a demarcated group (like
+in maths) which the following question mark makes optional.
+
+But we also want to capture the content of the folio reference, and this is also
+done with the parentheses. So to avoid having to count parentheses that we don't
+need as match groups, we can make some a parenthesis “anonymous” by adding `?:`
+to its beginning. Then it won't be available as a reference group. Of course, we
+don't do this with the relevant parenthesis, that matches the content of the
+reference, so it looks like this:
+`\\textbar\{\}(?:\textbf\{)?~\}?([0-9abrv]+)(?:\\textbf\{)?~\}?\\textbar\{\}`.
+
+Finally, we also want to capture those instances of the reference where we were
+a bit inconsistent ad wrote the folio side and column in superscript. Hold on,
+because now it gets a bit hairy:
+`\\textbar\{\}(?:\textbf\{)?~\}?([0-9]+)(:?\\textsuperscript\{)?([abrv]+)\}?(?:\\textbf\{)?~\}?\\textbar\{\}`.
+
+Although this looks like gibberish, it actually works! For more material on
+matching and non-matching groups and backreferencing, see [the Perl documentation](http://perldoc.perl.org/perlretut.html#Non-capturing-groupings)
+where you can also read about named match groups and much more.
+
+Piecing it together with a substitution pattern, we can do like this:
+
+```shell
+perl -p -i.backup -e 's/\\textbar\{\}(?:\textbf\{)?~\}?([0-9]+)(?:\\textsuperscript\{)?([abrv]+)\}?(?:\\textbf\{)?~\}?\\textbar\{\}/\\textbar\{\}\\ledsidenote{\1\2} /g' output.tex
+```
+
+And even better, since we distinguished the folio numbers from the side and
+column, we can make the consistently superscript, if we want:
+
+```shell
+perl -p -i.backup -e 's/\\textbar\{\}(?:\textbf\{)?~\}?([0-9]+)(?:\\textsuperscript\{)?([abrv]+)\}?(?:\\textbf\{)?~\}?\\textbar\{\}/\\textbar\{\}\\ledsidenote{\1\\textsuperscript\{\2\}} /g' output.tex
+```
+
+# Wrapping up<a id="orgheadline18"></a>
+
+This conversions might not be sufficient for your needs, and it is not unlikely
+that there is still a lot of work to be done with the apparatus. But at least
+this will get you started and get your old Word editions into the infinitely
+more flexible (although maybe also a bit more complex) format of LaTeX.
+
+Of course you are also just getting started configuring your *reledmac* setup
+and going through the critical apparatus.
+
+Stiching it all together in a script can be tempting. But we will leave that as
+an individual assignment.
