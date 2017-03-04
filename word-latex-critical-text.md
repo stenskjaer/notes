@@ -68,7 +68,7 @@ Sometimes you will need to replace some values in the commands. These variable
 values are marked with `<brackets>` in the commands, like so:
 
 ```shell
-$ perl -p -i.backup -e 's/(.+)\n/\\pstart\n\1\n\\pend\n/g' "<file name>.tex"
+$ perl -p -i.backup -e 's/(.+)\n/\\pstart\n$1\n\\pend\n/g' "<file name>.tex"
 ```
 
 # Original document must be .docx format<a id="orgheadline2"></a>
@@ -334,7 +334,7 @@ They take the following possibilities into consideration:
     contains `\emph{}`, `\textbf{}` and what not.
 
 ```bash
-$ perl -p -i.backup -e 's/(\w+)([.,;:?!{}\[\]]+)?\\footnote{(Boeth|Arist.*?)((?:\{(?-1)\}|[^{}]++)*)}/\\edtext{\1}{\\lemma{}\\Bfootnote{\3\4}}\2/gi' "output.tex"
+$ perl -p -i.backup -e 's/(\w+)([.,;:?!{}\[\]]+)?\\footnote{(Boeth|Arist.*?)((?:\{(?-1)\}|[^{}]++)*)}/\\edtext{$1}{\\lemma{}\\Bfootnote{$3$4}}$2/gi' "output.tex"
 ```
 
 ## The *apparatus criticus*<a id="orgheadline11"></a>
@@ -344,7 +344,7 @@ regardless of whether there is a lemma marker ("]") or not. The assumption is
 that the lemma of the text is also contained in the footnote.
 
 ```bash
-$ perl -p -i.backup -e 's/(.+)([.,;:?!{}\[\]]+)?\\footnote{\1 ?(?:{\]})? ?((?:\{(?-1)\}|[^{}]++)*)}/\\edtext{\1}{\\Afootnote{\3}}\2/gi' "output.tex"
+$ perl -p -i.backup -e 's/(.+)([.,;:?!{}\[\]]+)?\\footnote{$1 ?(?:{\]})? ?((?:\{(?-1)\}|[^{}]++)*)}/\\edtext{$1}{\\Afootnote{$3}}$2/gi' "output.tex"
 ```
 
 Note that this conversion does not handle references that are not to a specific
@@ -398,7 +398,7 @@ Let's say we also add some helpful structural numbers in the format “<1.>” o
 We could convert this to a custom macro called `\no{}` like this:
 
 ```shell
-$ perl -p -i.backup -e 's/\\textless\{\} ?([0-9. ]+) ?\\textgreater\{\}/\\no{\1\}/g' output.tex
+$ perl -p -i.backup -e 's/\\textless\{\} ?([0-9. ]+) ?\\textgreater\{\}/\\no{$1\}/g' output.tex
 ```
 
 The matched characters will be all numbers between 0 and 9, "." and " ".
@@ -451,14 +451,14 @@ where you can also read about named match groups and much more.
 Piecing it together with a substitution pattern, we can do like this:
 
 ```shell
-perl -p -i.backup -e 's/\\textbar\{\}(?:\textbf\{)?~\}?([0-9]+)(?:\\textsuperscript\{)?([abrv]+)\}?(?:\\textbf\{)?~\}?\\textbar\{\}/\\textbar\{\}\\ledsidenote{\1\2} /g' output.tex
+perl -p -i.backup -e 's/\\textbar\{\}(?:\textbf\{)?~\}?([0-9]+)(?:\\textsuperscript\{)?([abrv]+)\}?(?:\\textbf\{)?~\}?\\textbar\{\}/\\textbar\{\}\\ledsidenote{$1$2} /g' output.tex
 ```
 
 And even better, since we distinguished the folio numbers from the side and
 column, we can make the consistently superscript, if we want:
 
 ```shell
-perl -p -i.backup -e 's/\\textbar\{\}(?:\textbf\{)?~\}?([0-9]+)(?:\\textsuperscript\{)?([abrv]+)\}?(?:\\textbf\{)?~\}?\\textbar\{\}/\\textbar\{\}\\ledsidenote{\1\\textsuperscript\{\2\}} /g' output.tex
+perl -p -i.backup -e 's/\\textbar\{\}(?:\textbf\{)?~\}?([0-9]+)(?:\\textsuperscript\{)?([abrv]+)\}?(?:\\textbf\{)?~\}?\\textbar\{\}/\\textbar\{\}\\ledsidenote{$1\\textsuperscript\{$2\}} /g' output.tex
 ```
 
 # Wrapping up<a id="orgheadline17"></a>
