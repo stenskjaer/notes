@@ -204,7 +204,7 @@ For *Reledmac* to create the paragraphs correctly, they should be wrapped in
 `\pstart` and `\pend`. This could usually be done like this:
 
 ```shell
-$ perl -p -i.backup -e 's/(.+)\n/\\pstart\n\1\n\\pend\n/g' "output.tex"
+$ perl -p -i.backup -e 's/(.+)\n/\\pstart\n$1\n\\pend\n/g' "output.tex"
 ```
 
 However, if you have an edition where headings are not marked with a separate
@@ -221,50 +221,56 @@ For instance, assume that the two first levels look like this:
 We skip those in the processing by replacing the above command with this:
 
 ```shell
-$ perl -p -i.backup -e 'm/\\textless\{\}[~ A-Za-z0-9]+\\textgreater\{\}/ ? s/(.+)/\1/ : s/((?<!\\textless\{\}~\w).+)\n/\\pstart\n\1\n\\pend\n/g' "output.tex"
+$ perl -p -i.backup -e 'if (m/^\\textless\{\}[~ A-Za-z0-9]+\\textgreater\{\}/) {} else { s/(.+)/\\pstart\n$1\n\\pend/g }' "output.tex"
 ```
 
 This command is a bit complex, but what it basically says is “for each line, if
 this line starts with the specified heading pattern, skip it, otherwise wrap it
-in `\pstart` and `\pend`.” Now let's convert those headings too.
+in `\pstart` and `\pend`.” 
+
+Some short notes on the pattern matching headings:
+
+-   Some charactes have special functions in regex, so if you want to match those,
+    they much be escaped with the "\\". This explains "\\\\", "\\{", and "\\}".
+-   The text of the heading is matched with the "[~ A-Z0-9 ]". The "[" and "]"
+    open and close so-called character classes. This means it matches all the
+    characters designated by the brackets. Here it means "all uppercase letters
+    from A to Z", "all numbers between 0 and 9" as well as all spaces (notice
+    the " " in the brackets) and "~". The subsequent "+" means "one or more
+    times". So any combination of spaces, tildes, uppercase letters and numbers
+    will be matched.
+-   The matched text is surrounded by parentheses. This means that the content of
+    the match can be referred in the substitution pattern. The content of each
+    consecutive parenthesis is numbered according to its location in the string.
+    There is only one here, so it will be printed by writing "$1" in the
+    substitution pattern.
+
+So now, let's substitute those headings too.
 
 ## Different headings<a id="orgheadline8"></a>
 
-Before we get started, we must get the objective straight. We want to convert
-the different levels of headings to the appropriate LaTeX commands, and since
-headings can't be in a numbered environment, we will also have to wrap the
-sections in `\endnumbering` and `\beginnumbering`.
+Now we want to convert the headings to receive a heading style in our document.
+Technically, the best way to do this would be to find all the headings and
+convert the subsequent `\pstart` to `\pstart[<heading-command>]\noindent`, as
+that is the proper way to include unnumbered headings in reledmac
+([see §16.1 include the documentation](http://mirrors.dotsrc.org/ctan/macros/latex/contrib/reledmac/reledmac.pdf)).
+
+But to keep the regex more simple, we will just insert custom macros where we
+define the heading styles outside of the `\pstart`s and `\pend`s. In that way,
+they won't affect the line numbering.
 
 So, to match the first level, we can use the following regex
 `\\textless\{\}~([A-Z0-9 ]+)~\\textgreater\{\}`.
 
-Some short notes:
-
--   Some charactes have special functions in regex, so if you want to match those,
-    they much be escaped with the "\\". This explains "\\\\", "\\{", and "\\}".
--   The text of the heading is matched with the "[A-Z0-9 ]". The "[" and "]" open
-    and close so-called character classes. This means it matches all the
-    characters designated by the brackets. Here it means "all uppercase letters
-    from A to Z", "all numbers between 0 and 9" as well as all spaces (notice the
-    " " in the brackets). The subsequent "+" means "one or more times". So any
-    combination of spaces, uppercase letters and numbers will be matched.
--   The matched text is surrounded by parentheses. This means that the content of
-    the match can be referred in the substitution pattern. The content of each
-    consecutive parenthesis is numbered according to its location in the string.
-    There is only one here, so it will be printed by writing "\\1" in the
-    substitution pattern.
-
-If we want the substitution to create a `\section*{}`, we can do like this:
-`\\section\*\{\1\}`.
+If we want the substitution to create a command that we call `\customsection{}`,
+we can do like this: `\\customsection\{$1\}`.
 
 Now we assemble it in the substitution command in perl. The syntax is the
-following: `s/<match pattern>/<substitution pattern/g`. The initial "s" tells
-the program that we want it to Subsitute the first pattern by the second. The
-final *modifier* "g" signifies that the match is Global (substitution more
-than one instance in a line).
+following: `s/<match pattern>/<substitution pattern/`. The initial "s" tells
+the program that we want it to Subsitute the first pattern by the second.
 
 The complete command thus looks like this:
-`s/\\textless\{\}~(.+?)~\\textgreater\{\}/\\section\*\{\1\}/g`
+`s/\\textless\{\}~(.+?)~\\textgreater\{\}/\\customsection\{$1\}/`
 
 To run this substitution from the command line, add `perl -p -i.backup -e`
 before the pattern and the filename after the pattern. The pattern itself should
@@ -273,13 +279,16 @@ be enclosed in quotation marks.
 So all told, it looks like this:
 
 ```shell
-$ perl -p -i.backup -e 's/^\\textless\{\}~([A-Z0-9 ]+)~\\textgreater\{\}/\n\\endnumbering\n\\section\*\{\1\}\n\\beginnumbering\n/g' output.tex
+$ perl -p -i.backup -e 's/^\\textless\{\}~([A-Z0-9 ]+)~\\textgreater\{\}/\\customsection\{$1\}/' output.tex
 ```
 
-This will convert something like this:
-
+This will convert something like
 ```latex
 \textless{}~LECTIO I~\textgreater{}
+```
+into
+```latex
+\customsection{LECTIO I}
 ```
 
 Important note: If you are at the top of the document (before the main text and
@@ -298,14 +307,17 @@ We will make this a subsection in the document with the following complete
 command:
 
 ```shell
-$ perl -p -i.backup -e 's/^\\textless\{\} ?([A-Za-z0-9 ]+) ?\\textgreater\{\}/\\endnumbering\n\\subsection\*\{\1\}\n\\beginnumbering/g' output.tex
+$ perl -p -i.backup -e 's/^\\textless\{\} ?([A-Za-z0-9 ]+) ?\\textgreater\{\}/\\customsubsection\{$1\}/' output.tex
 ```
 
-Now we have converted the headings, and if you run the document, it should build
-without any errors.
+Now we have converted the headings, and we can then define the headings
+according to our layout preferences.
 
-This also made it up for a short *Perl regular expressions 101*. For much more
-on the perl regular expression capabilities, see [the documentation](http://perldoc.perl.org/perlre.html).
+If you run the document, it should build without any errors.
+
+This was then also a short *Perl regular expressions 101*. For much more on the
+perl regular expression capabilities,
+see [the documentation](http://perldoc.perl.org/perlre.html).
 
 # Convert footnotes to critical notes<a id="orgheadline13"></a>
 
