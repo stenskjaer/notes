@@ -356,7 +356,7 @@ regardless of whether there is a lemma marker ("]") or not. The assumption is
 that the lemma of the text is also contained in the footnote.
 
 ```bash
-$ perl -p -i.backup -e 's/(.+)([.,;:?!{}\[\]]+)?\\footnote{$1 ?(?:{\]})? ?((?:\{(?-1)\}|[^{}]++)*)}/\\edtext{$1}{\\Afootnote{$3}}$2/gi' "output.tex"
+$ perl -p -i.backup -e 's/(.+)([.,;:?!{}\[\]]+)?\\footnote{\1 ?(?:{\]})? ?((?:\{(?-1)\}|[^{}]++)*)}/\\edtext{$1}{\\Afootnote{$3}}$2/gi' "output.tex"
 ```
 
 Note that this conversion does not handle references that are not to a specific
