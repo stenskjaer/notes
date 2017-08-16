@@ -74,6 +74,8 @@ is tampered with or counterfeited.
 
 Questions:
 -   How about when we want to submit multiple files?
+-   Is there a way to avoid the separation of signature and statement while
+    still keeping the statement in a clear text format?
 
 Some background of GPG file signing:
 - https://www.gnupg.org/gph/en/manual/x135.html
