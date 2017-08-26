@@ -1,0 +1,42 @@
+<info>
+  <resources>
+    <!--
+        Attributes:
+        - xml:id = the id of the span point
+        - id = the id of the paragraph where it belongs
+        - position = the token number in the paragraph
+        - token = the token content for validation
+        - type = the phenomenon that the span demarcates
+        - next = the location where the span ends
+        - prev = the location where the span starts
+
+        A span **MUST** have either the @next or @prev attribute, but **MUST
+        NOT** have both.
+    -->
+    <resource xml:id="top-1" id="da-348-l3q15-bbg0a9"
+              position="6" token="duplex" type="syllogism"
+              next="top-2"/>
+    <resource xml:id="top-2" id="da-348-l3q15-bbg0a9"
+              position="49" token="intellectui" type="syllogism"
+              prev="top-1"/>
+    <resource xml:id="sub-1" id="da-348-l3q15-bbg0a9"
+              position="6" token="duplex" type="major"
+              partOf="top-1"
+              next="sub-2"/>
+    <resource xml:id="sub-2" id="da-348-l3q15-bbg0a9"
+              position="28" token="agente" type="major"
+              partOf="da-348-l3q15-span-zz9jfh"
+              prev="sub-1"/>
+    <!--
+        Here is a span without any type, so it can just function as a regular
+        span giving start and end labels, for instance for cross referencing
+        This span is identical with the above syllogism span. But that should be
+        handled by the script creating the representation (because collisions
+        are likely to happen, I think)
+    -->
+    <resource xml:id="top-3" id="da-348-l3q15-bbg0a9"
+              position="6" token="duplex" next="top-3"/>
+    <resource xml:id="top-4" id="da-348-l3q15-bbg0a9"
+              position="49" token="intellectui" prev="top-4"/>
+  </resources>
+</info>

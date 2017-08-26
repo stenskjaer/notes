@@ -125,6 +125,9 @@ the syllogistic structure as follows:
 The content of the nested syllogism would be similar. See the analysis.xml file
 for the full example.
 
+A possible alternative structure is the more flat approach of
+the [annotations.xml](annotations.xml) file.
+
 
 ## The intermediary XML
 
