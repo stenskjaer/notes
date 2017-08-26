@@ -210,7 +210,8 @@ ipso maxime, ergo erit quod intelligitur et per consequens intelligibile.%
 \pend
 ```
 
-See the full tex-file in full.tex. See the output in full.pdf
+See the full tex-file in [tex/base.tex](./tex/base.tex). See the output
+in [tex/base.pdf](./tex/base.pdf).
 
 ## XSLT for conversion
 
