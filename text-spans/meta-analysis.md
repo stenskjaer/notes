@@ -163,15 +163,15 @@ example produce the following exceprt of an intermediary file:
   et eius intelligere <unclear>recipitur</unclear> in ipso maxime, ergo
   erit quod intelligitur et per consequens
   <w xml:id="da-348-l3q15-syll-3k9b6h-con-end">intelligibile</w>.
+  <spanGrp type="syllogism" xml:id="da-348-l3q15-syll-3k9b6h">
+    <span from="da-348-l3q15-syll-3k9b6h-maj-start"
+          to="da-348-l3q15-syll-3k9b6h-maj-end">major</span>
+    <span from="da-348-l3q15-syll-3k9b6h-min-start"
+          to="da-348-l3q15-syll-3k9b6h-min-end">minor</span>
+    <span from="da-348-l3q15-syll-3k9b6h-con-start"
+          to="da-348-l3q15-syll-3k9b6h-con-end">conclusion</span>
+  </spanGrp>
 </p>
-<spanGrp type="syllogism" xml:id="da-348-l3q15-syll-3k9b6h">
-  <span from="da-348-l3q15-syll-3k9b6h-maj-start"
-        to="da-348-l3q15-syll-3k9b6h-maj-end">major</span>
-  <span from="da-348-l3q15-syll-3k9b6h-min-start"
-        to="da-348-l3q15-syll-3k9b6h-min-end">minor</span>
-  <span from="da-348-l3q15-syll-3k9b6h-con-start"
-        to="da-348-l3q15-syll-3k9b6h-con-end">conclusion</span>
-</spanGrp>
 ```
 
 Only the top level syllogism is annotated here, to keep it just somewhat
