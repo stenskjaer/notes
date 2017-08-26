@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="https://raw.githubusercontent.com/lombardpress/lombardpress-schema/master/src/out/critical.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="https://raw.githubusercontent.com/lombardpress/lombardpress-schema/master/src/out/critical.rng" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>
+          Quaestio III.15: Utrum intellectus secundum se sit intelligibilis
+          tamquam proprium obiectum
+        </title>
+        <author>Anonymus</author>
+        <editor>Michael Stenskjær Christensen</editor>
+      </titleStmt>
+      <editionStmt>
+        <edition n="0.0.1-dev">
+          <date when="2017-07-31">July 31, 2017</date>
+        </edition>
+      </editionStmt>
+      <publicationStmt>
+        <publisher>Michael</publisher>
+        <availability status="free">
+          <p>Published under a <ref target="https://creativecommons.org/licenses/by-sa/4.0/">Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)</ref></p>
+        </availability>
+        <date when="2017-07-31">July 31, 2017</date>
+      </publicationStmt>
+      <sourceDesc>
+        <listWit>
+          <witness xml:id="A">Assisi, Biblioteca de Convento di San Francesco, ms. 290, ff. 95r--107v</witness>
+        </listWit>
+      </sourceDesc>
+    </fileDesc>
+    <encodingDesc>
+      <variantEncoding method="parallel-segmentation" location="internal"/>
+      <schemaRef n="lbp-critical-1.0.0"
+                 url="https://raw.githubusercontent.com/lombardpress/lombardpress-schema/master/src/1.0/critical.rng">
+      </schemaRef>
+      <editorialDecl>
+        <p>
+          Encoding of this text has followed the recommendations of the
+          LombardPress 1.0.0 guidelines for a critical edition.
+        </p>
+      </editorialDecl>
+    </encodingDesc>
+    <revisionDesc status="draft">
+      <listChange>
+        <change when="2017-07-31" status="draft" n="0.0.1-dev">
+          <p>Created file for the first time.</p>
+        </change>
+      </listChange>
+    </revisionDesc>
+  </teiHeader>
+  <text xml:lang="la" type="critical">
+    <front>
+      <div xml:id="startsOn">
+        <pb n="104v" ed="#A"/><cb ed="#A" n="b"/>
+      </div>
+    </front>
+    <body>
+      <div xml:id="da-348-l3q15">
+        <p xml:id="da-348-l3q15-bbg0a9">
+          Praeterea per
+          <cit>
+            <ref>
+              <name ref="#Aristotle">Philosopum</name>
+              in quinto
+            </ref>
+            <quote>
+              duplex est actio, una quae manet in agente, alia quae transit in
+              rem extrinsecam
+            </quote>
+            <note>
+              Locus non inventus, sed num ad <name
+              ref="#Aristotle">Arist.</name> <title
+              ref="#Arist.Metaph">Metaph.</title> IX.8 1050a30--b2 aspicit?
+            </note>
+          </cit>
+          ; unde dicit quod intelligere est actio manens in agente, sed in
+          tali actione oportet id quod agitur esse unitum cum agente, illud
+          ergo quod intelligitur oportet esse unitum ipsi intellectui; sed non
+          esset seperatum ab intellectu, nam eius actio transiret in aliud,
+          quod negat Philosophus; cum igitur intellectus sit maxime sibi unus,
+          et eius intelligere <unclear>recipitur</unclear> in ipso maxime,
+          ergo erit quod intelligitur et per consequens intelligibile.
+        </p>
+      </div>
+    </body>
+  </text>
+</TEI>

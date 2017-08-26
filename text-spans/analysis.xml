@@ -1,0 +1,66 @@
+<!-- This is the top level syllogism -->
+<syllogism xml:id="da-348-l3q15-syll-3k9b6h">
+  <major>
+    <span>
+      <start>
+        <id>da-348-l3q15-bbg0a9</id> <!-- The paragraph xml:id -->
+        <pos>6</pos>                 <!-- Token number in the paragraph-->
+        <word>duplex</word>          <!-- Token content for error checking -->
+      </start>
+      <end>
+        <id>da-348-l3q15-bbg0a9</id>
+        <pos>49</pos>
+        <word>intellectui</word>
+      </end>
+    </span>
+  </major>
+  <minor>
+  </minor>
+  <conclusion></conclusion>
+</syllogism>
+
+<!-- This is the contained syllogism -->
+<syllogism xml:id="da-348-l3q15-syll-bx5xkk">
+  <major>
+    <span>
+      <start>
+        <id>da-348-l3q15-bbg0a9</id>
+        <pos>20</pos>
+        <word>unde</word>
+      </start>
+      <end>
+        <id>da-348-l3q15-bbg0a9</id>
+        <pos>28</pos>
+        <word>agente</word>
+      </end>
+    </span>
+  </major>
+  <minor>
+    <span>
+      <start>
+        <id>da-348-l3q15-bbg0a9</id>
+        <pos>29</pos>
+        <word>sed</word>
+      </start>
+      <end>
+        <id>da-348-l3q15-bbg0a9</id>
+        <pos>40</pos>
+        <word>agente</word>
+      </end>
+    </span>
+  </minor>
+  <conclusion>
+    <span>
+      <start>
+        <id>da-348-l3q15-bbg0a9</id>
+        <pos>41</pos>
+        <word>illud</word>
+      </start>
+      <end>
+        <id>da-348-l3q15-bbg0a9</id>
+        <pos>49</pos>
+        <word>intellectui</word>
+      </end>
+    </span>
+  </conclusion>
+</syllogism>
